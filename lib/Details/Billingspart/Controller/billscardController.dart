@@ -1,18 +1,10 @@
-import 'package:billing/Details/Billingspart/table.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:billing/Details/Billingspart/table.dart';
 
-class Billscard extends StatefulWidget {
-  const Billscard(this.name, this.date, {super.key});
-  final String name;
-  final String date;
-
-  @override
-  State<Billscard> createState() => _BillscardState();
-}
-
-class _BillscardState extends State<Billscard> {
-  void showPdfPopup() {
+class BillscardController extends GetxController {
+  void showPdfPopup(BuildContext context, String name) {
     showDialog(
       context: context,
       builder: (_) => Center(
@@ -36,11 +28,11 @@ class _BillscardState extends State<Billscard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // File name + close icon
+                    // File name + close icon (EXACTLY like your original)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
+                        InkWell(
                           onTap: () => Navigator.of(context).pop(),
                           child: const Icon(
                             Icons.close,
@@ -50,7 +42,7 @@ class _BillscardState extends State<Billscard> {
                         ),
                         Expanded(
                           child: Text(
-                            widget.name,
+                            name,
                             style: GoogleFonts.cairo(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -63,18 +55,17 @@ class _BillscardState extends State<Billscard> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Disabled fields + table
+                    // Disabled fields + table (EXACTLY like your original)
                     Column(
                       children: [
-                        // Use IntrinsicWidth to size the Row naturally
                         Row(
                           children: [
                             Expanded(
-                              child: buildField('رقم الفاتورة', '1234', false),
+                              child: _buildField('رقم الفاتورة', '1234', false),
                             ),
                             const SizedBox(width: 20),
                             Expanded(
-                              child: buildField(
+                              child: _buildField(
                                 'نوع الفاتورة',
                                 'مبيعات',
                                 false,
@@ -82,7 +73,7 @@ class _BillscardState extends State<Billscard> {
                             ),
                             const SizedBox(width: 20),
                             Expanded(
-                              child: buildField(
+                              child: _buildField(
                                 'تاريخ الفاتورة',
                                 '31-07-2025',
                                 false,
@@ -90,7 +81,7 @@ class _BillscardState extends State<Billscard> {
                             ),
                             const SizedBox(width: 20),
                             Expanded(
-                              child: buildField(
+                              child: _buildField(
                                 'قيمة الفاتورة',
                                 '429.200',
                                 false,
@@ -104,7 +95,7 @@ class _BillscardState extends State<Billscard> {
                     ),
 
                     const SizedBox(height: 16),
-                    // Close button
+                    // Close button (EXACTLY like your original)
                     Align(
                       alignment: Alignment.centerLeft,
                       child: ElevatedButton(
@@ -136,7 +127,8 @@ class _BillscardState extends State<Billscard> {
     );
   }
 
-  Widget buildField(String label, String hint, bool enabled) {
+  // Your EXACT original buildField method
+  Widget _buildField(String label, String hint, bool enabled) {
     return SizedBox(
       width: 120,
       child: Column(
@@ -157,7 +149,6 @@ class _BillscardState extends State<Billscard> {
             decoration: InputDecoration(
               filled: true,
               fillColor: enabled ? Colors.white : Color(0xFFF3F6F9),
-
               hintText: hint,
               hintStyle: GoogleFonts.cairo(
                 fontSize: 16,
@@ -175,64 +166,6 @@ class _BillscardState extends State<Billscard> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color(0xFFD9EBF4)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  widget.date,
-                  style: GoogleFonts.cairo(
-                    color: const Color(0xFF505050),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              GestureDetector(
-                onTap: showPdfPopup,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.5,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: Color(0xFF0077B6), width: 1),
-                      ),
-                    ),
-                    padding: EdgeInsets.only(bottom: 0.5),
-                    child: Text(
-                      widget.name,
-                      style: GoogleFonts.cairo(
-                        color: const Color(0xFF0077B6),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

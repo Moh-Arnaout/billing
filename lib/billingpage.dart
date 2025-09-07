@@ -1,8 +1,8 @@
-import 'package:billing/FourTables/Finished/finishedtable.dart';
-import 'package:billing/FourTables/New/newtable.dart';
-import 'package:billing/FourTables/Pending/pending_table.dart';
-import 'package:billing/FourTables/Shortcomings/shortcomingstable.dart';
-import 'package:billing/FourTables/Tabs/incen_comm.dart';
+import 'package:billing/FourTables/Finished/View/finishedtable.dart';
+import 'package:billing/FourTables/New/View/newtable.dart';
+import 'package:billing/FourTables/Pending/View/pending_table.dart';
+import 'package:billing/FourTables/Shortcomings/View/shortcomingstable.dart';
+import 'package:billing/FourTables/Tabs/View/incen_comm.dart';
 import 'package:billing/Header/header.dart';
 import 'package:billing/Header/subheader.dart';
 import 'package:billing/Header/subheader2.dart';
@@ -23,13 +23,10 @@ class BillingpageState extends State<Billingpage> {
   bool showUploadCard = false;
 
   // Single key for the PendingTable
-  final GlobalKey<PendingTableState> pendingTableKey =
-      GlobalKey<PendingTableState>();
-  final GlobalKey<FinishedtableState> finishedTableKey =
-      GlobalKey<FinishedtableState>();
-  final GlobalKey<NewtableState> newTableKey = GlobalKey<NewtableState>();
-  final GlobalKey<ShortcomingsState> shortcomingsKey =
-      GlobalKey<ShortcomingsState>();
+  Key? pendingTableKey;
+  Key? finishedTableKey;
+  Key? newTableKey;
+  Key? shortcomingsKey;
 
   List<String> _visibleColumns = [];
 
@@ -102,7 +99,7 @@ class BillingpageState extends State<Billingpage> {
               ),
             ),
             AnimatedContainer(
-              duration: Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 100),
               curve: Curves.easeInOut,
               width: isSidebarOpen ? sidebarWidth : 0,
               height: screenHeight,

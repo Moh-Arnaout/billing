@@ -1,4 +1,4 @@
-import 'package:billing/Details/Billingspart/billspage.dart';
+import 'package:billing/Details/Billingspart/View/billspage.dart';
 import 'package:billing/Details/CRMpart/uploadcard.dart';
 import 'package:billing/Details/Detailspart.dart/Row1.dart';
 import 'package:billing/Details/Detailspart.dart/Row10.dart';
@@ -15,12 +15,13 @@ import 'package:billing/Header/header.dart';
 import 'package:billing/Header/subheader.dart';
 import 'package:billing/Header/subheader2.dart';
 import 'package:billing/Sidepanel/sidepanel.dart';
-import 'package:billing/FourTables/Finished/finishedtable.dart';
-import 'package:billing/FourTables/New/newtable.dart';
-import 'package:billing/FourTables/Pending/pending_table.dart';
-import 'package:billing/FourTables/Shortcomings/shortcomingstable.dart';
+import 'package:billing/FourTables/Finished/View/finishedtable.dart';
+import 'package:billing/FourTables/New/View/newtable.dart';
+import 'package:billing/FourTables/Pending/View/pending_table.dart';
+import 'package:billing/FourTables/Shortcomings/View/shortcomingstable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 
 class Alldetailspage2 extends StatefulWidget {
   const Alldetailspage2({super.key});
@@ -35,16 +36,24 @@ class BillingpageState extends State<Alldetailspage2> {
   int counter = 0;
   bool showUploadCard = false;
 
-  // Single key for the PendingTable
-  final GlobalKey<PendingTableState> pendingTableKey =
-      GlobalKey<PendingTableState>();
-  final GlobalKey<FinishedtableState> finishedTableKey =
-      GlobalKey<FinishedtableState>();
-  final GlobalKey<NewtableState> newTableKey = GlobalKey<NewtableState>();
-  final GlobalKey<ShortcomingsState> shortcomingsKey =
-      GlobalKey<ShortcomingsState>();
+  // Initialize keys properly (remove final from declarations that aren't initialized)
+  Key? pendingTableKey;
+  Key? finishedTableKey;
+  Key? newTableKey;
+  Key? shortcomingsKey;
 
   List<String> _visibleColumns = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize keys if needed (optional since you're using GetX controllers)
+    pendingTableKey = ValueKey('pending_table');
+    finishedTableKey = ValueKey('finished_table');
+    newTableKey = ValueKey('new_table');
+    shortcomingsKey = ValueKey('shortcomings_table');
+  }
 
   void incrementCounter() {
     setState(() {
@@ -82,21 +91,19 @@ class BillingpageState extends State<Alldetailspage2> {
         child: Row(
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: screenHeight,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width,
-                      ),
+                      constraints: BoxConstraints(maxWidth: screenWidth),
                       child: Column(
                         children: [
                           Header(isSidebarOpen: isSidebarOpen),
-                          SizedBox(height: 37),
+                          const SizedBox(height: 37),
                           Subheader(counter: counter),
-                          SizedBox(height: 32),
+                          const SizedBox(height: 32),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -105,7 +112,7 @@ class BillingpageState extends State<Alldetailspage2> {
                                 child: Column(
                                   children: [
                                     Billspage(),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                     Offerpage(),
                                   ],
                                 ),
@@ -149,87 +156,36 @@ class BillingpageState extends State<Alldetailspage2> {
                                             color: Color(0xFF1E7CB4),
                                           ),
                                         ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row1(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row2(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row3(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row4(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row5(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row6(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row7(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row8(),
-                                        ),
-                                        SizedBox(height: 16),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row9(),
-                                        ),
-                                        SizedBox(height: 22),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 32,
-                                            right: 12,
-                                          ),
-                                          child: Row10(),
-                                        ),
-                                        SizedBox(height: 16),
+                                        const SizedBox(height: 16),
+
+                                        // Use consistent padding for all rows
+                                        ...List.generate(10, (index) {
+                                          final rowWidgets = [
+                                            Row1(),
+                                            Row2(),
+                                            Row3(),
+                                            Row4(),
+                                            Row5(),
+                                            Row6(),
+                                            Row7(),
+                                            Row8(),
+                                            Row9(),
+                                            Row10(),
+                                          ];
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 32,
+                                              right: 12,
+                                              bottom: 16,
+                                            ),
+                                            child: rowWidgets[index],
+                                          );
+                                        }),
+
+                                        const SizedBox(
+                                          height: 6,
+                                        ), // Adjust spacing before CRM section
+
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             left: 32,
@@ -241,8 +197,8 @@ class BillingpageState extends State<Alldetailspage2> {
                                                 MainAxisAlignment.end,
                                             children: [
                                               Text(
-                                                textAlign: TextAlign.end,
                                                 'CRM رفع الملفات على ',
+                                                textAlign: TextAlign.end,
                                                 style: GoogleFonts.cairo(
                                                   color: Color(0xFF1E7CB4),
                                                   fontSize: 16,
@@ -252,7 +208,7 @@ class BillingpageState extends State<Alldetailspage2> {
                                             ],
                                           ),
                                         ),
-                                        /////////////////////////////////////////////////////////////////////////////////////
+
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             left: 32,
@@ -264,7 +220,9 @@ class BillingpageState extends State<Alldetailspage2> {
                                             color: Color(0xFF1E7CB4),
                                           ),
                                         ),
-                                        SizedBox(height: 16),
+
+                                        const SizedBox(height: 16),
+
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             left: 32,
@@ -272,7 +230,6 @@ class BillingpageState extends State<Alldetailspage2> {
                                           ),
                                           child: Uploadcard(),
                                         ),
-                                        /////////////////////////////////////////////////////////////////////////////////
                                       ],
                                     ),
                                   ],
@@ -294,7 +251,7 @@ class BillingpageState extends State<Alldetailspage2> {
               height: screenHeight,
               child: isSidebarOpen
                   ? Sidepanel(onToggle: toggleSidebar)
-                  : Container(),
+                  : SizedBox.shrink(),
             ),
           ],
         ),
