@@ -167,59 +167,57 @@ class PendingTable extends StatelessWidget {
                                       ),
                                       child: Row(
                                         children: [
-                                          // Client Name
                                           if (controller.visibleColumns
                                               .contains('اسم العميل'))
                                             SizedBox(
                                               width: _getColumnWidth(
                                                 'اسم العميل',
                                               ),
-                                              child: Row(
-                                                children: [
-                                                  Positioned(
-                                                    left: 0,
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    child: Container(
-                                                      height:
-                                                          MediaQuery.of(
-                                                            context,
-                                                          ).size.height /
-                                                          12,
+                                              child: IntrinsicHeight(
+                                                child: Row(
+                                                  children: [
+                                                    // Red indicator column
+                                                    Container(
+                                                      height: 55,
+                                                      width: 20,
                                                       decoration: BoxDecoration(
                                                         color: isLate
                                                             ? Colors.red
                                                             : Colors
-                                                                  .transparent, // Only change this line
+                                                                  .transparent,
                                                       ),
-                                                      child: Center(
-                                                        child: RotatedBox(
-                                                          quarterTurns: 1,
-                                                          child: Text(
-                                                            isLate
-                                                                ? 'متأخرة'
-                                                                : '', // Only change this line
-                                                            style: GoogleFonts.cairo(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: isLate
-                                                                  ? Colors.white
-                                                                  : Colors
-                                                                        .transparent, // Only change this line
-                                                            ),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ),
+                                                      child: isLate
+                                                          ? Center(
+                                                              child: RotatedBox(
+                                                                quarterTurns: 1,
+                                                                child: Text(
+                                                                  'متأخرة',
+                                                                  style: GoogleFonts.cairo(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : null,
+                                                    ),
+                                                    // Text cell
+                                                    Expanded(
+                                                      child: _TextTableCell(
+                                                        text:
+                                                            rowData.clientName,
                                                       ),
                                                     ),
-                                                  ),
-                                                  _TextTableCell(
-                                                    text: rowData.clientName,
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
 
