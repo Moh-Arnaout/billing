@@ -1,16 +1,16 @@
 import 'package:billing/Details/Billingspart/View/billspage.dart';
-import 'package:billing/Details/CRMpart/uploadcard.dart';
-import 'package:billing/Details/Detailspart.dart/Row1.dart';
-import 'package:billing/Details/Detailspart.dart/Row10.dart';
-import 'package:billing/Details/Detailspart.dart/Row2.dart';
-import 'package:billing/Details/Detailspart.dart/Row3.dart';
-import 'package:billing/Details/Detailspart.dart/Row4.dart';
-import 'package:billing/Details/Detailspart.dart/Row5.dart';
-import 'package:billing/Details/Detailspart.dart/Row6.dart';
-import 'package:billing/Details/Detailspart.dart/Row7.dart';
-import 'package:billing/Details/Detailspart.dart/Row8.dart';
-import 'package:billing/Details/Detailspart.dart/Row9.dart';
-import 'package:billing/Details/Offerpart/offerpage.dart';
+import 'package:billing/Details/CRMpart/View/uploadcard.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row1.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row10.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row2.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row3.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row4.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row5.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row6.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row7.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row8.dart';
+import 'package:billing/Details/Detailspart.dart/View/Row9.dart';
+import 'package:billing/Details/Offerpart/View/offerpage.dart';
 import 'package:billing/Header/header.dart';
 import 'package:billing/Header/subheader.dart';
 import 'package:billing/Header/subheader2.dart';
@@ -19,68 +19,20 @@ import 'package:billing/FourTables/Finished/View/finishedtable.dart';
 import 'package:billing/FourTables/New/View/newtable.dart';
 import 'package:billing/FourTables/Pending/View/pending_table.dart';
 import 'package:billing/FourTables/Shortcomings/View/shortcomingstable.dart';
+import 'package:billing/combinedControllers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
-class Alldetailspage2 extends StatefulWidget {
+import 'package:get/get.dart';
+
+class Alldetailspage2 extends StatelessWidget {
   const Alldetailspage2({super.key});
 
   @override
-  State<Alldetailspage2> createState() => BillingpageState();
-}
-
-class BillingpageState extends State<Alldetailspage2> {
-  bool isSidebarOpen = true;
-  bool showTable = true;
-  int counter = 0;
-  bool showUploadCard = false;
-
-  // Initialize keys properly (remove final from declarations that aren't initialized)
-  Key? pendingTableKey;
-  Key? finishedTableKey;
-  Key? newTableKey;
-  Key? shortcomingsKey;
-
-  List<String> _visibleColumns = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize keys if needed (optional since you're using GetX controllers)
-    pendingTableKey = ValueKey('pending_table');
-    finishedTableKey = ValueKey('finished_table');
-    newTableKey = ValueKey('new_table');
-    shortcomingsKey = ValueKey('shortcomings_table');
-  }
-
-  void incrementCounter() {
-    setState(() {
-      counter++;
-    });
-  }
-
-  void toggleSidebar() {
-    setState(() {
-      isSidebarOpen = !isSidebarOpen;
-    });
-  }
-
-  void handleDemoChanged(bool isYes) {
-    setState(() {
-      showUploadCard = isYes;
-    });
-  }
-
-  void _handleColumnsChanged(List<String> columns) {
-    setState(() {
-      _visibleColumns = columns;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Use Get.find since controller is already created in Billingpage
+    final BillingController controller = Get.find<BillingController>();
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final sidebarWidth = screenWidth / 5;
@@ -100,9 +52,15 @@ class BillingpageState extends State<Alldetailspage2> {
                       constraints: BoxConstraints(maxWidth: screenWidth),
                       child: Column(
                         children: [
-                          Header(isSidebarOpen: isSidebarOpen),
+                          Obx(
+                            () => Header(
+                              isSidebarOpen: controller.isSidebarOpen.value,
+                            ),
+                          ),
                           const SizedBox(height: 37),
-                          Subheader(counter: counter),
+                          Obx(
+                            () => Subheader(counter: controller.counter.value),
+                          ),
                           const SizedBox(height: 32),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,6 +82,7 @@ class BillingpageState extends State<Alldetailspage2> {
                                   children: [
                                     Column(
                                       children: [
+                                        // Client Details Header
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             left: 12,
@@ -158,7 +117,7 @@ class BillingpageState extends State<Alldetailspage2> {
                                         ),
                                         const SizedBox(height: 16),
 
-                                        // Use consistent padding for all rows
+                                        // All Row widgets
                                         ...List.generate(10, (index) {
                                           final rowWidgets = [
                                             Row1(),
@@ -182,10 +141,9 @@ class BillingpageState extends State<Alldetailspage2> {
                                           );
                                         }),
 
-                                        const SizedBox(
-                                          height: 6,
-                                        ), // Adjust spacing before CRM section
+                                        const SizedBox(height: 6),
 
+                                        // CRM Header
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             left: 32,
@@ -244,14 +202,16 @@ class BillingpageState extends State<Alldetailspage2> {
                 ),
               ),
             ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              width: isSidebarOpen ? sidebarWidth : 0,
-              height: screenHeight,
-              child: isSidebarOpen
-                  ? Sidepanel(onToggle: toggleSidebar)
-                  : SizedBox.shrink(),
+            Obx(
+              () => AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                width: controller.isSidebarOpen.value ? sidebarWidth : 0,
+                height: screenHeight,
+                child: controller.isSidebarOpen.value
+                    ? Sidepanel(onToggle: controller.toggleSidebar)
+                    : SizedBox.shrink(),
+              ),
             ),
           ],
         ),

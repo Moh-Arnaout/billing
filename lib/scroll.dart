@@ -7,7 +7,7 @@ class CustomScrollBehavior extends MaterialScrollBehavior {
     PointerDeviceKind.touch,
     PointerDeviceKind.mouse, // Enable mouse drag scrolling
     PointerDeviceKind.stylus,
-    PointerDeviceKind.unknown,
+    PointerDeviceKind.trackpad,
   };
 
   @override

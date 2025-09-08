@@ -1,58 +1,65 @@
+import 'package:billing/Details/Detailspart.dart/Controller/rowsController.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class Row8 extends StatefulWidget {
+class Row8 extends StatelessWidget {
   const Row8({super.key});
 
   @override
-  State<Row8> createState() => _ConsultantrowState();
-}
-
-class _ConsultantrowState extends State<Row8> {
-  String? selectedConsultant;
-  String? selectedOfferNumber;
-  DateTime? selectedOfferDate;
-
-  bool showMoreInfoConsultant = false;
-  bool showMoreInfoOfferNumber = false;
-  bool showMoreInfoOfferDate = false;
-
-  final importantIcon = SvgPicture.asset(
-    'Images/important.svg',
-    width: 7,
-    height: 7,
-  );
-
-  @override
   Widget build(BuildContext context) {
+    final RowsController controller = Get.put(RowsController());
     return Row(
       children: [
-        buildField1(
-          additionalText: '',
-          label: Text(
-            'حالة الفاتورة',
-            style: GoogleFonts.cairo(
-              color: const Color(0xFF505050),
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
+        // Wrap with Obx since it uses controller.selectedConsultant.value
+        Obx(
+          () => buildField1(
+            additionalText: '',
+            label: Text(
+              'حالة الفاتورة',
+              style: GoogleFonts.cairo(
+                color: const Color(0xFF505050),
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
             ),
+            hint: 'اختر من القائمة',
+            value: controller.invoiceStatus.value, // Use invoiceStatus instead
+            onChanged: (value) {
+              controller.invoiceStatus.value = value; // Fix: assign the value
+            },
           ),
-          hint: 'اختر من القائمة',
-          value: selectedConsultant,
-          onChanged: (value) => setState(() => selectedConsultant = value),
         ),
         const SizedBox(width: 40),
-        buildField('رقم الفاتورة ', 'اكتب القيمة هنا', true),
+        buildField(
+          controller: controller,
+          label: 'رقم الفاتورة',
+          hint: 'اكتب القيمة هنا',
+          enabled: true,
+          fieldType: 'invoiceNumber',
+        ),
         const SizedBox(width: 40),
-        buildField('قيمة الفاتورة', 'اكتب القيمة هنا', true),
+        buildField(
+          controller: controller,
+          label: 'قيمة الفاتورة',
+          hint: 'اكتب القيمة هنا',
+          enabled: true,
+          fieldType: 'invoiceValue',
+        ),
       ],
     );
   }
 
-  Widget buildField(String label, String hint, bool enabled) {
+  Widget buildField({
+    required RowsController controller,
+    required String label,
+    required String hint,
+    required bool enabled,
+    required String fieldType,
+  }) {
     return Expanded(
       child: Column(
         children: [
@@ -73,6 +80,13 @@ class _ConsultantrowState extends State<Row8> {
           TextField(
             enabled: enabled,
             textAlign: TextAlign.end,
+            onChanged: (value) {
+              if (fieldType == 'invoiceNumber') {
+                controller.invoiceNumber.value = value;
+              } else if (fieldType == 'invoiceValue') {
+                controller.invoiceValue.value = value;
+              }
+            },
             decoration: InputDecoration(
               hoverColor: Colors.transparent,
               filled: true,
@@ -114,9 +128,14 @@ class _ConsultantrowState extends State<Row8> {
     bool moreinfo = false,
     String? additionalText,
     TextStyle? additionalTextStyle,
-    bool showMoreInfo = false, // individual flag for each field
+    bool showMoreInfo = false,
   }) {
-    const List<String> list = <String>['محمد', 'رامي', 'خالد', 'ارناؤوط'];
+    const List<String> list = <String>[
+      'تم الدفع',
+      'لم يتم الدفع',
+      'دفع جزئي',
+      'ملغية',
+    ];
 
     return Expanded(
       child: Column(
@@ -212,7 +231,7 @@ class _ConsultantrowState extends State<Row8> {
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3), // shadow color
+                      color: Colors.grey.withOpacity(0.3),
                       spreadRadius: 0,
                       blurRadius: 8,
                       offset: Offset(0, 1),

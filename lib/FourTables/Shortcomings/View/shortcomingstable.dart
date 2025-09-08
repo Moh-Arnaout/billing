@@ -505,7 +505,7 @@ class Shortcomings extends StatelessWidget {
         title,
         style: GoogleFonts.cairo(
           fontWeight: FontWeight.w700,
-          fontSize: 14,
+          fontSize: 16,
           color: const Color(0xFF505050),
         ),
         textAlign: TextAlign.center,
@@ -544,7 +544,7 @@ class Shortcomings extends StatelessWidget {
                 title,
                 style: GoogleFonts.cairo(
                   fontWeight: FontWeight.w700,
-                  fontSize: 14,
+                  fontSize: 16,
                   color: const Color(0xFF505050),
                 ),
                 textAlign: TextAlign.center,
@@ -562,7 +562,7 @@ class Shortcomings extends StatelessWidget {
   double _getColumnWidth(String columnName) {
     switch (columnName) {
       case 'اسم العميل':
-        return 220.0;
+        return 300.0;
       case 'المبرمج المسؤول':
         return 220.0;
       case 'تاريخ التسليم المتوقع':
@@ -615,7 +615,7 @@ class Shortcomings extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.cairo(
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
           color: Color(0xFF505050),
         ),
@@ -642,7 +642,7 @@ class Shortcomings extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.cairo(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
               color: isYellowBackground ? Color(0xFF505050) : Colors.white,
             ),
@@ -702,7 +702,7 @@ class Shortcomings extends StatelessWidget {
             child: Text(
               name,
               style: GoogleFonts.cairo(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFF505050),
               ),

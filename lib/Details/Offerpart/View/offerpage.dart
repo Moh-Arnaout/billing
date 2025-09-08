@@ -1,68 +1,20 @@
-import 'package:billing/Details/Offerpart/offercard.dart';
+import 'package:billing/Details/Offerpart/Controller/offercardController.dart';
+import 'package:billing/Details/Offerpart/Controller/offerpageController.dart';
+import 'package:billing/Details/Offerpart/View/offercard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Offerpage extends StatefulWidget {
-  const Offerpage({super.key});
+class Offerpage extends StatelessWidget {
+  Offerpage({super.key});
 
-  @override
-  State<Offerpage> createState() => _OfferpageState();
-}
-
-class _OfferpageState extends State<Offerpage> {
-  final List<List<dynamic>> offers = [
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      [
-        'pdfs/AI_Motion_Sense_Competition_Guide.pdf',
-        'pdfs/Essential Principles.pdf',
-      ],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf', 'pdfs/Essential Principles.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf', 'pdfs/Essential Principles.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf', 'pdfs/Management 1.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf', 'pdfs/Management 1.pdf'],
-    ],
-    [
-      '4866',
-      'ناجح',
-      '12-03-2025',
-      ['pdfs/Business Analysis.pdf', 'pdfs/Management 1.pdf'],
-    ],
-  ];
+  final OfferpageController offerpageController = Get.put(
+    OfferpageController(),
+  );
+  final OffercardController offercardController = Get.put(
+    OffercardController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +54,7 @@ class _OfferpageState extends State<Offerpage> {
               padding: const EdgeInsets.only(right: 8),
               child: SingleChildScrollView(
                 child: Column(
-                  children: offers
+                  children: offerpageController.offers
                       .map(
                         (o) => Padding(
                           padding: const EdgeInsets.only(bottom: 16),

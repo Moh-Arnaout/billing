@@ -1,4 +1,4 @@
-import 'package:billing/Details/CRMpart/uploading.dart';
+import 'package:billing/Details/CRMpart/View/uploading.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

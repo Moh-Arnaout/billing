@@ -548,7 +548,7 @@ Widget _buildHeaderCell(String title) {
       title,
       style: GoogleFonts.cairo(
         fontWeight: FontWeight.w700,
-        fontSize: 14,
+        fontSize: 16,
         color: const Color(0xFF505050),
       ),
       textAlign: TextAlign.center,
@@ -593,7 +593,7 @@ Widget _buildSortableHeaderCell(String title, Pendingcontroller controller) {
 double _getColumnWidth(String columnName) {
   switch (columnName) {
     case 'اسم العميل':
-      return 244.0;
+      return 300.0;
     case 'المبرمج المسؤول':
       return 220.0;
     case 'تاريخ التسليم المتوقع':
@@ -646,7 +646,7 @@ Widget _TextTableCell({required String text}) {
     child: Text(
       text,
       style: GoogleFonts.cairo(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
         color: Color(0xFF505050),
       ),
@@ -673,7 +673,7 @@ Widget _StatusTableCell({required String text, required Color colors}) {
         child: Text(
           text,
           style: GoogleFonts.cairo(
-            fontSize: 12,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: isYellowBackground ? Color(0xFF505050) : Colors.white,
           ),
@@ -733,7 +733,7 @@ Widget _ProfileTableCell({required String name}) {
           child: Text(
             name,
             style: GoogleFonts.cairo(
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
               color: Color(0xFF505050),
             ),

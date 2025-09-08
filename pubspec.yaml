@@ -41,6 +41,10 @@ dependencies:
   intl: ^0.20.2
   file_picker: ^10.3.2
   syncfusion_flutter_pdfviewer: ^30.2.7
+  
+dependency_overrides:
+  # Add this if you get web compilation errors
+  web: ^0.5.1
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@
     it to work correctly.
 
     For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    * [https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
 
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
@@ -31,6 +31,12 @@
 
   <title>billing</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- ADD THESE PDF.js SCRIPTS FOR SYNCFUSION PDF VIEWER WEB SUPPORT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

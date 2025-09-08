@@ -1,61 +1,18 @@
-import 'package:billing/FourTables/Finished/View/finishedtable.dart';
-import 'package:billing/FourTables/New/View/newtable.dart';
-import 'package:billing/FourTables/Pending/View/pending_table.dart';
-import 'package:billing/FourTables/Shortcomings/View/shortcomingstable.dart';
 import 'package:billing/FourTables/Tabs/View/incen_comm.dart';
 import 'package:billing/Header/header.dart';
 import 'package:billing/Header/subheader.dart';
 import 'package:billing/Header/subheader2.dart';
 import 'package:billing/Sidepanel/sidepanel.dart';
+import 'package:billing/combinedControllers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Billingpage extends StatefulWidget {
+class Billingpage extends StatelessWidget {
   const Billingpage({super.key});
 
   @override
-  State<Billingpage> createState() => BillingpageState();
-}
-
-class BillingpageState extends State<Billingpage> {
-  bool isSidebarOpen = true;
-  bool showTable = true;
-  int counter = 0;
-  bool showUploadCard = false;
-
-  // Single key for the PendingTable
-  Key? pendingTableKey;
-  Key? finishedTableKey;
-  Key? newTableKey;
-  Key? shortcomingsKey;
-
-  List<String> _visibleColumns = [];
-
-  void incrementCounter() {
-    setState(() {
-      counter++;
-    });
-  }
-
-  void toggleSidebar() {
-    setState(() {
-      isSidebarOpen = !isSidebarOpen;
-    });
-  }
-
-  void handleDemoChanged(bool isYes) {
-    setState(() {
-      showUploadCard = isYes;
-    });
-  }
-
-  void _handleColumnsChanged(List<String> columns) {
-    setState(() {
-      _visibleColumns = columns;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final BillingController controller = Get.put(BillingController());
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final sidebarWidth = screenWidth / 5;
@@ -74,23 +31,27 @@ class BillingpageState extends State<Billingpage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Header(isSidebarOpen: isSidebarOpen),
+                        Obx(
+                          () => Header(
+                            isSidebarOpen: controller.isSidebarOpen.value,
+                          ),
+                        ),
                         SizedBox(height: 37),
-                        Subheader(counter: counter),
+                        Obx(() => Subheader(counter: controller.counter.value)),
                         SizedBox(height: 32),
                         Subheader2(
-                          onColumnsChanged: _handleColumnsChanged,
-                          pendingTableKey: pendingTableKey,
-                          finishedTableKey: finishedTableKey,
-                          newTableKey: newTableKey,
-                          shortcomingsKey: shortcomingsKey,
+                          onColumnsChanged: controller.updateVisibleColumns,
+                          pendingTableKey: controller.pendingTableKey,
+                          finishedTableKey: controller.finishedTableKey,
+                          newTableKey: controller.newTableKey,
+                          shortcomingsKey: controller.shortcomingsKey,
                         ),
                         SizedBox(height: 32),
                         Fourtabs(
-                          pendingTableKey: pendingTableKey,
-                          finishedTableKey: finishedTableKey,
-                          newtableKey: newTableKey,
-                          shortcomingsKey: shortcomingsKey,
+                          pendingTableKey: controller.pendingTableKey,
+                          finishedTableKey: controller.finishedTableKey,
+                          newtableKey: controller.newTableKey,
+                          shortcomingsKey: controller.shortcomingsKey,
                         ),
                       ],
                     ),
@@ -98,14 +59,16 @@ class BillingpageState extends State<Billingpage> {
                 ),
               ),
             ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 100),
-              curve: Curves.easeInOut,
-              width: isSidebarOpen ? sidebarWidth : 0,
-              height: screenHeight,
-              child: isSidebarOpen
-                  ? Sidepanel(onToggle: toggleSidebar)
-                  : Container(),
+            Obx(
+              () => AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                curve: Curves.easeInOut,
+                width: controller.isSidebarOpen.value ? sidebarWidth : 0,
+                height: screenHeight,
+                child: controller.isSidebarOpen.value
+                    ? Sidepanel(onToggle: controller.toggleSidebar)
+                    : Container(),
+              ),
             ),
           ],
         ),
